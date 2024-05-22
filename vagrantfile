@@ -1,0 +1,49 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+    # Jenkins VM
+    config.vm.define "jenkins-mastertest" do |jenkins_mastertest|
+      jenkins_mastertest.vm.box = "generic/ubuntu2004"
+      jenkins_mastertest.vm.hostname = "jenkins-mastertest"
+      jenkins_mastertest.vm.network "private_network", ip: "192.168.50.21"
+  
+      jenkins_mastertest.vm.provider "virtualbox" do |vb|
+        vb.name = "jenkins-mastertest"
+        vb.memory = "2048"
+        vb.cpus = 2
+      end
+    end
+      
+    # Build Slave VM
+    config.vm.define "build-slave" do |build_slave|
+      build_slave.vm.box = "generic/ubuntu2004"
+      build_slave.vm.hostname = "build-slave"
+      build_slave.vm.network "private_network", ip: "192.168.50.22"
+  
+      build_slave.vm.provider "virtualbox" do |vb|
+        vb.name = "build-slave"
+        vb.memory = "2048"
+        vb.cpus = 2
+      end
+    end
+    
+    # Ansible VM
+    config.vm.define "ansible" do |ansible|
+      ansible.vm.box_download_insecure = true
+      ansible.vm.box = "generic/ubuntu2004"
+      ansible.vm.hostname = "ansible"
+      ansible.vm.network "private_network", ip: "192.168.50.23"
+      # ansible.vm.network "forwarded_port", guest: 9090, host: 9090
+      # ansible.vm.network "forwarded_port", guest: 9100, host: 9100
+      # ansible.vm.network "forwarded_port", guest: 3000, host: 3000
+      
+      ansible.vm.provider "virtualbox" do |vb|
+        vb.name = "ansible"
+        vb.memory = "5048"
+        vb.cpus = 2
+      end
+    end
+  end
+  

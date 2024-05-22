@@ -1,0 +1,14 @@
+[jenkins-master]
+192.168.50.21
+
+[jenkins-master:vars]
+ansible_user=vagrant
+ansible_password=vagrant
+
+[jenkins-slave]
+192.168.50.22
+
+
+[jenkins-slave:vars]
+ansible_user=vagrant
+ansible_password=vagrant
